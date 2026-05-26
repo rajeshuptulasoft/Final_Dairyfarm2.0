@@ -1,0 +1,428 @@
+/* ============================================================
+   Mukti Dairy Farm — Original CSS-only environmental animation
+   ============================================================ */
+
+.farm-scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 620px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: linear-gradient(
+    180deg,
+    #ffd89b 0%,
+    #ffb56b 18%,
+    #b6e0c2 45%,
+    #6abf7e 70%,
+    #3f8a55 100%
+  );
+  isolation: isolate;
+}
+
+/* SUN with soft pulsing glow (sunrise/sunset feel) */
+.farm-sun {
+  position: absolute;
+  top: 14%;
+  right: 12%;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff4c2 0%, #ffd56b 55%, #ffb347 100%);
+  box-shadow:
+    0 0 60px 20px rgba(255, 213, 107, 0.55),
+    0 0 120px 40px rgba(255, 179, 71, 0.35);
+  animation: sunPulse 6s ease-in-out infinite;
+}
+@keyframes sunPulse {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.06); filter: brightness(1.1); }
+}
+
+/* Warm light overlay sweeps across the scene */
+.sun-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 220, 150, 0) 30%,
+    rgba(255, 220, 150, 0.18) 50%,
+    rgba(255, 220, 150, 0) 70%
+  );
+  mix-blend-mode: screen;
+  animation: sunSweep 14s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes sunSweep {
+  0%, 100% { transform: translateX(-20%); opacity: 0.6; }
+  50% { transform: translateX(20%); opacity: 1; }
+}
+
+/* CLOUDS */
+.cloud {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  filter: blur(0.5px);
+  opacity: 0.92;
+  box-shadow:
+    30px 8px 0 -2px #fff,
+    60px 0 0 -4px #fff,
+    -25px 8px 0 -2px #fff,
+    -50px 12px 0 -6px #fff;
+}
+.cloud-1 {
+  width: 60px; height: 22px;
+  top: 12%; left: -10%;
+  animation: cloudDrift 38s linear infinite;
+}
+.cloud-2 {
+  width: 80px; height: 28px;
+  top: 22%; left: -15%;
+  animation: cloudDrift 55s linear infinite;
+  animation-delay: -10s;
+  opacity: 0.85;
+}
+.cloud-3 {
+  width: 50px; height: 18px;
+  top: 6%; left: -8%;
+  animation: cloudDrift 46s linear infinite;
+  animation-delay: -22s;
+}
+@keyframes cloudDrift {
+  from { transform: translateX(0); }
+  to { transform: translateX(140vw); }
+}
+
+/* BIRDS — drawn with pure CSS using ::before and ::after as wings */
+.bird {
+  position: absolute;
+  width: 18px;
+  height: 8px;
+  opacity: 0.85;
+}
+.bird::before,
+.bird::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #2a3a30;
+  border-radius: 50%;
+  animation: wingFlap 0.45s ease-in-out infinite;
+}
+.bird::before {
+  left: 0;
+  transform-origin: right center;
+}
+.bird::after {
+  right: 0;
+  transform-origin: left center;
+}
+@keyframes wingFlap {
+  0%, 100% { transform: rotate(0deg) scaleY(1); }
+  50% { transform: rotate(-18deg) scaleY(0.6); }
+}
+
+.bird-1 { top: 18%; left: -5%; animation: birdFly1 22s linear infinite; }
+.bird-2 { top: 26%; left: -5%; animation: birdFly1 28s linear infinite; animation-delay: -6s; transform: scale(0.8); }
+.bird-3 { top: 14%; left: -5%; animation: birdFly1 34s linear infinite; animation-delay: -14s; transform: scale(0.7); }
+
+@keyframes birdFly1 {
+  0%   { transform: translate(0, 0) scale(0.9); }
+  25%  { transform: translate(35vw, -10px) scale(0.95); }
+  50%  { transform: translate(70vw, 8px) scale(1); }
+  75%  { transform: translate(95vw, -4px) scale(0.95); }
+  100% { transform: translate(120vw, 0) scale(0.9); }
+}
+
+/* DISTANT HILLS */
+.hill {
+  position: absolute;
+  bottom: 28%;
+  left: -10%;
+  right: -10%;
+  height: 50%;
+  background: radial-gradient(ellipse at 30% 100%, #4f9c6a 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 100%, #3f8a55 0%, transparent 65%);
+  border-radius: 50% 50% 0 0 / 18% 18% 0 0;
+  filter: blur(0.3px);
+}
+.hill-back {
+  bottom: 32%;
+  height: 38%;
+  opacity: 0.65;
+  filter: blur(1.5px);
+  background: radial-gradient(ellipse at 50% 100%, #6fb088 0%, transparent 60%);
+}
+
+/* GROUND / FIELD */
+.field {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  background:
+    linear-gradient(180deg, #5fa874 0%, #3a8052 60%, #2a6a42 100%);
+}
+.field::before {
+  /* subtle field furrows */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      95deg,
+      rgba(255, 255, 255, 0.04) 0 2px,
+      transparent 2px 22px
+    );
+}
+
+/* GRASS BLADES — gentle wind sway */
+.grass {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+}
+.blade {
+  flex: 1;
+  height: 100%;
+  background: linear-gradient(180deg, #6dbf85 0%, #2f7a4a 100%);
+  clip-path: polygon(45% 0, 55% 0, 70% 100%, 30% 100%);
+  transform-origin: bottom center;
+  animation: grassSway 3.6s ease-in-out infinite;
+}
+.blade:nth-child(odd)  { animation-duration: 4.2s; animation-delay: -0.6s; }
+.blade:nth-child(3n)   { animation-duration: 3.2s; animation-delay: -1.1s; opacity: 0.9; }
+.blade:nth-child(5n)   { animation-duration: 4.8s; animation-delay: -1.8s; }
+@keyframes grassSway {
+  0%, 100% { transform: skewX(-3deg); }
+  50%      { transform: skewX(3deg); }
+}
+
+/* COW — composed of plain divs, pure CSS */
+.cow {
+  position: absolute;
+  bottom: 12%;
+  left: 18%;
+  width: 180px;
+  height: 110px;
+  z-index: 4;
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.25));
+  animation: cowBob 4s ease-in-out infinite;
+}
+.cow-2 {
+  left: 58%;
+  bottom: 9%;
+  transform: scale(0.85);
+  animation-delay: -1.4s;
+}
+@keyframes cowBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+.cow-2 { animation-name: cowBob2; }
+@keyframes cowBob2 {
+  0%, 100% { transform: scale(0.85) translateY(0); }
+  50%      { transform: scale(0.85) translateY(-3px); }
+}
+
+/* Body */
+.cow-body {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  width: 130px;
+  height: 62px;
+  background: #fdfdfd;
+  border-radius: 60px 70px 30px 30px / 50px 60px 30px 30px;
+  box-shadow: inset -10px -8px 0 rgba(0, 0, 0, 0.05);
+}
+/* Spots */
+.cow-body::before,
+.cow-body::after {
+  content: "";
+  position: absolute;
+  background: #2c2c2c;
+  border-radius: 50%;
+}
+.cow-body::before {
+  width: 28px; height: 20px;
+  top: 8px; left: 18px;
+  border-radius: 60% 40% 50% 50%;
+}
+.cow-body::after {
+  width: 22px; height: 18px;
+  bottom: 10px; right: 30px;
+  border-radius: 50% 60% 40% 50%;
+}
+
+/* Legs */
+.cow-leg {
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 22px;
+  background: #fdfdfd;
+  border-radius: 0 0 4px 4px;
+}
+.cow-leg::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: #2c2c2c;
+  border-radius: 0 0 4px 4px;
+}
+.cow-leg.l1 { left: 30px; }
+.cow-leg.l2 { left: 48px; }
+.cow-leg.l3 { left: 110px; }
+.cow-leg.l4 { left: 128px; }
+
+/* Head — grazing dip animation */
+.cow-head {
+  position: absolute;
+  bottom: 18px;
+  left: 4px;
+  width: 58px;
+  height: 48px;
+  background: #fdfdfd;
+  border-radius: 55% 40% 50% 50% / 60% 50% 50% 50%;
+  transform-origin: 90% 50%;
+  animation: graze 5s ease-in-out infinite;
+}
+@keyframes graze {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  20%      { transform: rotate(35deg) translateY(8px); }
+  40%      { transform: rotate(38deg) translateY(10px); }
+  55%      { transform: rotate(32deg) translateY(7px); }
+  70%      { transform: rotate(0deg) translateY(0); }
+  85%      { transform: rotate(-6deg) translateY(-1px); }
+}
+
+/* Ear */
+.cow-head::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  right: 8px;
+  width: 12px;
+  height: 14px;
+  background: #2c2c2c;
+  border-radius: 50% 50% 50% 50%;
+  transform: rotate(-20deg);
+}
+/* Eye */
+.cow-head::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  width: 5px;
+  height: 5px;
+  background: #1b1b1b;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+/* Horn */
+.cow-horn {
+  position: absolute;
+  top: -8px;
+  right: 24px;
+  width: 10px;
+  height: 12px;
+  background: linear-gradient(180deg, #e8d6a8, #b89a5e);
+  border-radius: 50% 50% 30% 30%;
+  transform: rotate(-12deg);
+}
+
+/* Tail — gentle swish */
+.cow-tail {
+  position: absolute;
+  bottom: 60px;
+  right: 6px;
+  width: 6px;
+  height: 38px;
+  background: #fdfdfd;
+  border-radius: 4px;
+  transform-origin: top center;
+  animation: tailSwish 1.6s ease-in-out infinite;
+}
+.cow-tail::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: -3px;
+  width: 12px;
+  height: 12px;
+  background: #2c2c2c;
+  border-radius: 50%;
+}
+@keyframes tailSwish {
+  0%, 100% { transform: rotate(-15deg); }
+  50%      { transform: rotate(20deg); }
+}
+
+/* Floating dust / pollen particles */
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.particle {
+  position: absolute;
+  bottom: 10%;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 245, 200, 0.85);
+  border-radius: 50%;
+  filter: blur(0.5px);
+  animation: floatUp 12s linear infinite;
+}
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+.particle:nth-child(2) { left: 25%; animation-delay: -3s; }
+.particle:nth-child(3) { left: 45%; animation-delay: -6s; }
+.particle:nth-child(4) { left: 65%; animation-delay: -1.5s; }
+.particle:nth-child(5) { left: 80%; animation-delay: -8s; }
+.particle:nth-child(6) { left: 92%; animation-delay: -4s; }
+@keyframes floatUp {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(-340px) translateX(20px); opacity: 0; }
+}
+
+/* Scene caption */
+.scene-caption {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  padding: 10px 18px;
+  border-radius: 999px;
+  color: var(--green-900);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-sm);
+  animation: fadeUp 1.2s ease both;
+}
+
+@media (max-width: 700px) {
+  .cow { transform: scale(0.7); bottom: 14%; }
+  .cow-2 { transform: scale(0.55); }
+  .farm-sun { width: 60px; height: 60px; }
+  .scene-caption { font-size: 0.78rem; padding: 8px 14px; }
+}

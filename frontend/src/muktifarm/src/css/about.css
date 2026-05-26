@@ -1,0 +1,207 @@
+.about-story {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+.about-story h2 { font-size: 2rem; color: var(--green-900); margin: 0 0 14px; }
+.about-story p  { color: var(--muted); line-height: 1.75; }
+
+.about-story-media {
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #eef5ea 0%, #e2ede0 100%);
+  box-shadow: 0 16px 40px rgba(11, 61, 46, 0.1);
+}
+
+.about-story-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 860px) {
+  .about-story { grid-template-columns: 1fr; }
+}
+
+.mv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+}
+.mv-card {
+  background: #fff;
+  border-radius: 22px;
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(46, 125, 79, 0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.mv-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+.mv-card .mv-icon {
+  width: 54px; height: 54px;
+  border-radius: 16px;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, #eaf6e9, #f5ecd0);
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+.mv-card h3 { margin: 0 0 8px; color: var(--green-900); font-size: 1.25rem; }
+.mv-card p  { margin: 0; color: var(--muted); line-height: 1.7; }
+
+/* Care cards with images from assets */
+.mv-grid--care {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.mv-card--with-image {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mv-card-image-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: linear-gradient(160deg, #eef5ea 0%, #e2ede0 100%);
+}
+
+.mv-card-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.mv-card--with-image:hover .mv-card-image-wrap img {
+  transform: scale(1.04);
+}
+
+.mv-card--with-image h3 {
+  margin: 20px 24px 8px;
+}
+
+.mv-card--with-image p {
+  margin: 0 24px 24px;
+}
+
+@media (max-width: 700px) {
+  .mv-grid--care {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) { .mv-grid { grid-template-columns: 1fr; } }
+
+/* Organic dairy process — alternating image / content */
+.dairy-process-section {
+  background: #fbfbf8;
+}
+
+.dairy-process-list {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.dairy-process-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.dairy-process-media {
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #eef5ea 0%, #e2ede0 100%);
+  box-shadow: 0 16px 40px rgba(11, 61, 46, 0.1);
+  aspect-ratio: 4 / 3;
+}
+
+.dairy-process-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.dairy-process-content {
+  padding: 8px 12px;
+}
+
+.dairy-process-step {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green-700);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.dairy-process-content h3 {
+  margin: 0 0 14px;
+  color: var(--green-900);
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  line-height: 1.25;
+}
+
+.dairy-process-content p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+/* Odd steps: image left, content right (default DOM order) */
+.dairy-process-row.image-left .dairy-process-media {
+  order: 1;
+}
+
+.dairy-process-row.image-left .dairy-process-content {
+  order: 2;
+}
+
+/* Even steps: content left, image right */
+.dairy-process-row.image-right .dairy-process-content {
+  order: 1;
+}
+
+.dairy-process-row.image-right .dairy-process-media {
+  order: 2;
+}
+
+@media (max-width: 900px) {
+  .dairy-process-row,
+  .dairy-process-row.image-left,
+  .dairy-process-row.image-right {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .dairy-process-row.image-right .dairy-process-content,
+  .dairy-process-row.image-right .dairy-process-media,
+  .dairy-process-row.image-left .dairy-process-content,
+  .dairy-process-row.image-left .dairy-process-media {
+    order: unset;
+  }
+
+  .dairy-process-media {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+
+
+
+
+

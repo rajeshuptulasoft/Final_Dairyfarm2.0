@@ -1,0 +1,238 @@
+:root {
+  --pb-primary: #2e7d32;
+  --pb-light: #66bb6a;
+  --pb-cream: #f7faf7;
+  --pb-text: #1b1b1b;
+  --pb-gray: #5f6b66;
+}
+
+.premium-product-banner {
+  position: relative;
+  background-color: var(--pb-cream);
+  min-height: 72vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.pb-base-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #f0f7f1 0%, #e8f5e9 50%, #f7faf7 100%);
+  z-index: 0;
+}
+
+.pb-soft-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(247, 250, 247, 1) 0%,
+    rgba(247, 250, 247, 0.92) 42%,
+    rgba(247, 250, 247, 0.4) 70%,
+    rgba(247, 250, 247, 0) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.pb-container {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+}
+
+.pb-banner-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(320px, 1.05fr);
+  gap: 40px;
+  align-items: center;
+  padding: 48px 0 56px;
+}
+
+.pb-minimal-content {
+  max-width: 560px;
+}
+
+.pb-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px;
+  background: rgba(46, 125, 50, 0.08);
+  color: var(--pb-primary);
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+.pb-badge-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--pb-light);
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(102, 187, 106, 0.7);
+  animation: pulse 2s infinite;
+}
+
+.pb-heading {
+  font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+  color: var(--pb-text);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -1px;
+}
+
+section.premium-product-banner {
+  margin: 65px 0 0 0;
+}
+
+.pb-description {
+  font-size: 1.15rem;
+  color: var(--pb-gray);
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.pb-actions {
+  display: flex;
+  gap: 16px;
+}
+
+/* Keeps About banner same height as Products banner (no CTA button) */
+.pb-actions-spacer {
+  min-height: 54px;
+  pointer-events: none;
+}
+
+.pb-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 16px 36px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pb-btn-primary {
+  background: var(--pb-primary);
+  color: #fff !important;
+  box-shadow: 0 15px 35px rgba(46, 125, 50, 0.25);
+  border: 2px solid var(--pb-primary);
+}
+
+.pb-btn-primary:hover {
+  background: #236026;
+  border-color: #236026;
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(46, 125, 50, 0.35);
+}
+
+.pb-banner-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+}
+
+.pb-banner-image {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;
+  border-radius: 24px;
+  filter: drop-shadow(0 24px 48px rgba(46, 125, 50, 0.18));
+}
+
+.fade-up {
+  animation: fadeUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.fade-up-delay {
+  animation: fadeUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.25s forwards;
+  opacity: 0;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(102, 187, 106, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(102, 187, 106, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(102, 187, 106, 0);
+  }
+}
+
+@media (max-width: 991px) {
+  .premium-product-banner {
+    min-height: auto;
+    padding-bottom: 40px;
+  }
+
+  .pb-banner-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+    padding: 36px 0 40px;
+  }
+
+  .pb-minimal-content {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .pb-badge {
+    margin: 0 auto 24px;
+  }
+
+  .pb-actions {
+    justify-content: center;
+  }
+
+  .pb-banner-visual {
+    min-height: 280px;
+  }
+
+  .pb-soft-gradient {
+    background: linear-gradient(
+      180deg,
+      rgba(247, 250, 247, 1) 0%,
+      rgba(247, 250, 247, 0.85) 100%
+    );
+  }
+}
+
+@media (max-width: 576px) {
+  .pb-heading {
+    font-size: 2.2rem;
+  }
+
+  .pb-description {
+    font-size: 1.05rem;
+  }
+
+  .pb-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

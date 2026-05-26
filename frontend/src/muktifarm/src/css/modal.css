@@ -1,0 +1,327 @@
+/* Product enquiry modal — portaled to body, high z-index */
+.enquiry-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 61, 46, 0.55);
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: enquiryBackdropIn 0.25s ease both;
+}
+
+@keyframes enquiryBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.enquiry-modal-box {
+  width: 100%;
+  max-width: 520px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 34px;
+  position: relative;
+  border: 1px solid rgba(93, 115, 93, 0.18);
+  box-shadow: 0 30px 80px rgba(17, 61, 37, 0.25);
+  animation: enquiryModalIn 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  color: #0b3d2e;
+}
+
+@keyframes enquiryModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.enquiry-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(46, 125, 79, 0.1);
+  color: #0b3d2e;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.enquiry-modal-close:hover {
+  background: #0b3d2e;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.enquiry-modal-box h3 {
+  margin: 0 0 6px;
+  color: #0b3d2e;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.enquiry-modal-sub {
+  color: #4f6b57;
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.75;
+}
+
+.enquiry-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(76, 175, 109, 0.14);
+  color: #163a24;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.enquiry-modal-header {
+  margin-bottom: 24px;
+  padding-right: 36px;
+}
+
+.enquiry-field {
+  margin-bottom: 18px;
+}
+
+.enquiry-field label {
+  display: block;
+  margin-bottom: 10px;
+  color: #0b3d2e;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.enquiry-field input,
+.enquiry-field textarea,
+.enquiry-field select {
+  width: 100%;
+  border: 1px solid rgba(14, 61, 46, 0.14);
+  border-radius: 14px;
+  background: #f6fdf9;
+  padding: 14px 16px;
+  color: #1f3f22;
+  font-size: 1rem;
+  outline: none;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.enquiry-field textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.enquiry-field input:focus,
+.enquiry-field textarea:focus,
+.enquiry-field select:focus {
+  border-color: #8bcf91;
+  box-shadow: 0 0 0 4px rgba(149, 213, 178, 0.2);
+}
+
+.enquiry-actions-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.enquiry-btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(14, 61, 46, 0.16);
+  color: #0b3d2e;
+  min-width: 110px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.enquiry-btn-secondary:hover {
+  background: rgba(14, 61, 46, 0.06);
+}
+
+.enquiry-btn-submit {
+  flex: 1;
+  min-width: 160px;
+  background: #2e7d32;
+  color: #fff;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.enquiry-btn-submit:hover:not(:disabled) {
+  background: #0b3d2e;
+  transform: translateY(-2px);
+}
+
+.enquiry-btn-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.enquiry-err {
+  margin-top: 8px;
+  color: #c0392b;
+  font-size: 0.88rem;
+}
+
+.enquiry-modal-success {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.enquiry-check {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: #4caf50;
+  color: #fff;
+  font-size: 1.8rem;
+  display: grid;
+  place-items: center;
+}
+
+.quantity-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.quantity-unit-side {
+  flex: 0 0 42%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quantity-amount-side {
+  flex: 1 1 58%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quantity-side-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #4f6b57;
+}
+
+.quantity-stepper {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.qty-btn {
+  width: 44px;
+  min-width: 44px;
+  flex-shrink: 0;
+  border: 1px solid rgba(14, 61, 46, 0.16);
+  border-radius: 14px;
+  background: #fff;
+  color: #0b3d2e;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.qty-btn:hover {
+  background: rgba(149, 213, 178, 0.2);
+  border-color: #8bcf91;
+}
+
+.qty-input {
+  width: 100%;
+  max-width: 80px;
+  min-width: 56px;
+  text-align: center;
+  border: 1px solid rgba(14, 61, 46, 0.14);
+  border-radius: 14px;
+  background: #f6fdf9;
+  padding: 12px 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1f3f22;
+  box-sizing: border-box;
+}
+
+.qty-unit {
+  width: 100%;
+  border: 1px solid rgba(14, 61, 46, 0.14);
+  border-radius: 14px;
+  background: #f6fdf9;
+  padding: 12px 14px;
+  font-size: 1rem;
+  color: #1f3f22;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+@media (max-width: 520px) {
+  .enquiry-modal-backdrop {
+    padding: 14px;
+    align-items: flex-end;
+  }
+
+  .enquiry-modal-box {
+    padding: 26px 20px 22px;
+    border-radius: 20px;
+    max-height: 92vh;
+  }
+
+  .quantity-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .quantity-unit-side,
+  .quantity-amount-side {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .quantity-stepper {
+    justify-content: stretch;
+  }
+
+  .qty-input {
+    max-width: none;
+    flex: 1;
+  }
+}

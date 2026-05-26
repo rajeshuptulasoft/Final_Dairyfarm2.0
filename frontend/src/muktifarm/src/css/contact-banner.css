@@ -1,0 +1,87 @@
+/* ==========================================================================
+   CONTACT US BANNER - REALISTIC PREMIUM DAIRY FARM AESTHETIC
+   ========================================================================== */
+
+.mf-contact-banner {
+  position: relative;
+  background-color: #1a1511;
+  overflow: hidden;
+}
+
+/* Background Image with Slow Zoom Animation */
+.mf-contact-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Replace this URL with your custom generated AI image! */
+  background-image: url('https://images.unsplash.com/photo-1542840410-3092f99611a3?q=80&w=2500&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center center;
+  z-index: 0;
+  animation: slowZoomBannerContact 25s linear infinite alternate;
+}
+
+@keyframes slowZoomBannerContact {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+/* Overlay gradient for crisp text readability based on your exact prompt */
+.cb-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 40%, rgba(0,0,0,0.05) 100%);
+  z-index: 1;
+}
+
+/* Warm Sunlight glow to mimic golden hour and enhance the emotional feel */
+.cb-sunlight-glow {
+  position: absolute;
+  top: -10%;
+  right: 5%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 180, 100, 0.15) 0%, transparent 65%);
+  filter: blur(50px);
+  z-index: 1;
+  mix-blend-mode: screen;
+  animation: pulseSunlightContact 8s infinite alternate ease-in-out;
+}
+
+@keyframes pulseSunlightContact {
+  0% { opacity: 0.6; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Ensure content is positioned cleanly above the background */
+.mf-contact-banner .mf-banner-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Text styling to pop against the dark gradient */
+.cb-heading {
+  color: #ffffff !important;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.mf-contact-banner .mf-banner-content p {
+  color: #f0f0f0;
+  text-shadow: 0 1px 5px rgba(0,0,0,0.4);
+}
+
+.cb-kicker {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Responsive Fallbacks */
+@media (max-width: 991px) {
+  .cb-overlay-gradient {
+    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.85) 100%);
+  }
+  .mf-contact-banner::before {
+    background-position: 70% center;
+  }
+}
