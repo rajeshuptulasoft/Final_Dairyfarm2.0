@@ -12,6 +12,52 @@ function nullable($value) {
         : null;
 }
 
+function normalizeStockUnit($unit)
+{
+    $u = strtolower(trim((string)$unit));
+
+    if ($u === '' || in_array($u, ['kg', 'kgs', 'kilogram', 'kilograms'], true)) {
+        return 'kg';
+    }
+
+    if (in_array($u, ['l', 'ltr', 'litre', 'liter', 'litres', 'liters'], true)) {
+        return 'litre';
+    }
+
+    return $u;
+}
+
+/**
+ * Find an existing stock row for the same item (and unit) to merge refill quantity.
+ */
+function findExistingStockEntryForItem($itemId, $unit)
+{
+    $targetUnit = normalizeStockUnit($unit);
+
+    $rows = fetchAll(
+
+        "SELECT id, quantity, unit
+         FROM stock_entries
+         WHERE item_id = ?
+           AND quantity > 0
+           AND (supplier_type IS NULL
+                OR supplier_type NOT IN ('Consumption', 'Consumption Reversal'))
+           AND (remarks IS NULL OR remarks NOT LIKE 'Daily food%')
+         ORDER BY id ASC",
+
+        [$itemId]
+    );
+
+    foreach ($rows as $row) {
+
+        if (normalizeStockUnit($row['unit'] ?? 'kg') === $targetUnit) {
+            return $row;
+        }
+    }
+
+    return null;
+}
+
 /**
  * LIST STOCK ENTRIES
  * Used for showing records in table
@@ -28,7 +74,9 @@ function listStockEntries() {
 
     $offset = ($page - 1) * $limit;
 
-    $where = "WHERE 1=1";
+    $where = "WHERE se.quantity > 0
+              AND (se.supplier_type IS NULL
+                   OR se.supplier_type NOT IN ('Consumption', 'Consumption Reversal'))";
 
     $params = [];
 
@@ -229,66 +277,129 @@ function createStockEntry($input) {
         ], 404);
     }
 
+    $addQty = (float)$input['quantity'];
+    $unit = nullable($input['unit'] ?? 'Kg') ?? 'Kg';
+
+    if ($addQty <= 0) {
+
+        json([
+            'error' => 'Quantity must be greater than zero'
+        ], 422);
+    }
+
     /**
-     * INSERT DATA
+     * Same item_id (+ unit) already in stock — add to existing quantity
      */
-    $id = insert(
+    $existing = findExistingStockEntryForItem($input['item_id'], $unit);
 
-        "INSERT INTO stock_entries (
+    if ($existing) {
 
-            item_id,
-            entry_date,
-            batch_code,
-            supplier,
-            donor,
-            supplier_type,
-            category,
-            sub_category,
-            bill_code,
-            bill_date,
-            quantity,
-            unit,
-            remarks
+        $previousQty = (float)$existing['quantity'];
+        $newQty = round($previousQty + $addQty, 2);
 
-        ) VALUES (
+        execute(
 
-            ?,?,?,?,?,?,?,?,?,?,?,?,?
+            "UPDATE stock_entries SET
+                quantity = ?,
+                entry_date = ?,
+                batch_code = COALESCE(?, batch_code),
+                supplier = COALESCE(?, supplier),
+                donor = COALESCE(?, donor),
+                supplier_type = COALESCE(?, supplier_type),
+                category = COALESCE(?, category),
+                sub_category = COALESCE(?, sub_category),
+                bill_code = COALESCE(?, bill_code),
+                bill_date = COALESCE(?, bill_date),
+                remarks = COALESCE(?, remarks)
+             WHERE id = ?",
 
-        )",
+            [
+                $newQty,
+                $input['entry_date'],
+                nullable($input['batch_code'] ?? null),
+                nullable($input['supplier'] ?? null),
+                nullable($input['donor'] ?? null),
+                nullable($input['supplier_type'] ?? null),
+                nullable($input['category'] ?? null),
+                nullable($input['sub_category'] ?? null),
+                nullable($input['bill_code'] ?? null),
+                nullable($input['bill_date'] ?? null),
+                nullable($input['remarks'] ?? null),
+                $existing['id'],
+            ]
+        );
 
-        [
+        $id = (int)$existing['id'];
+        $message = 'Stock updated — added ' . $addQty . ' ' . $unit
+            . ' to existing entry (was ' . $previousQty . ', now ' . $newQty . ')';
+        $merged = true;
 
-            $input['item_id'],
+    } else {
 
-            $input['entry_date'],
+        /**
+         * New item in stock — insert row
+         */
+        $id = insert(
 
-            nullable($input['batch_code'] ?? null),
+            "INSERT INTO stock_entries (
 
-            nullable($input['supplier'] ?? null),
+                item_id,
+                entry_date,
+                batch_code,
+                supplier,
+                donor,
+                supplier_type,
+                category,
+                sub_category,
+                bill_code,
+                bill_date,
+                quantity,
+                unit,
+                remarks
 
-            nullable($input['donor'] ?? null),
+            ) VALUES (
 
-            nullable($input['supplier_type'] ?? null),
+                ?,?,?,?,?,?,?,?,?,?,?,?,?
 
-            nullable($input['category'] ?? null),
+            )",
 
-            nullable($input['sub_category'] ?? null),
+            [
 
-            nullable($input['bill_code'] ?? null),
+                $input['item_id'],
 
-            nullable($input['bill_date'] ?? null),
+                $input['entry_date'],
 
-            $input['quantity'],
+                nullable($input['batch_code'] ?? null),
 
-            nullable($input['unit'] ?? 'Kg'),
+                nullable($input['supplier'] ?? null),
 
-            nullable($input['remarks'] ?? null)
+                nullable($input['donor'] ?? null),
 
-        ]
-    );
+                nullable($input['supplier_type'] ?? null),
+
+                nullable($input['category'] ?? null),
+
+                nullable($input['sub_category'] ?? null),
+
+                nullable($input['bill_code'] ?? null),
+
+                nullable($input['bill_date'] ?? null),
+
+                $addQty,
+
+                $unit,
+
+                nullable($input['remarks'] ?? null)
+
+            ]
+        );
+
+        $message = 'Stock entry created successfully';
+        $merged = false;
+    }
 
     /**
-     * FETCH INSERTED RECORD
+     * FETCH RECORD
      */
     $record = fetchOne(
 
@@ -312,11 +423,13 @@ function createStockEntry($input) {
 
     json([
 
-        'message' => 'Stock entry created successfully',
+        'message' => $message,
+
+        'merged' => $merged,
 
         'record' => $record
 
-    ], 201);
+    ], $merged ? 200 : 201);
 }
 
 /**

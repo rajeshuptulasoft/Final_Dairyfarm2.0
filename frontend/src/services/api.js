@@ -197,6 +197,28 @@ export const feedAPI = {
   addStock: (data) => API.post('feed/inventory', data)
 };
 
+export const dailyFoodAPI = {
+  list: (params) =>
+    axios.get(`${DARIY_PHP_API}/dailyfood.php`, {
+      params,
+      headers: phpAuthHeaders(),
+    }),
+  listItems: () =>
+    axios.get(`${DARIY_PHP_API}/dailyfood.php`, {
+      params: { items: 1 },
+      headers: phpAuthHeaders(),
+    }),
+  create: (data) =>
+    axios.post(`${DARIY_PHP_API}/dailyfood.php`, data, {
+      headers: { 'Content-Type': 'application/json', ...phpAuthHeaders() },
+    }),
+  delete: (id) =>
+    axios.delete(`${DARIY_PHP_API}/dailyfood.php`, {
+      params: { id },
+      headers: phpAuthHeaders(),
+    }),
+};
+
 export const purchaseAPI = {
   list: (params) =>
     axios.get(`${DARIY_PHP_API}/purchase.php`, {
@@ -342,10 +364,34 @@ export const reportsAPI = {
 };
 
 export const salesAPI = {
-  list: (params) => API.get('sales', { params }),
-  create: (data) => API.post('sales', data),
-  update: (id, data) => API.put(`sales/${id}`, data),
-  delete: (id) => API.delete(`sales/${id}`)
+  list: (params) =>
+    axios.get(`${DARIY_PHP_API}/sales.php`, {
+      params,
+      headers: phpAuthHeaders(),
+    }),
+  products: () =>
+    axios.get(`${DARIY_PHP_API}/sales.php`, {
+      params: { products: 1 },
+      headers: phpAuthHeaders(),
+    }),
+  get: (id) =>
+    axios.get(`${DARIY_PHP_API}/sales.php`, {
+      params: { id },
+      headers: phpAuthHeaders(),
+    }),
+  create: (data) =>
+    axios.post(`${DARIY_PHP_API}/sales.php`, data, {
+      headers: { 'Content-Type': 'application/json', ...phpAuthHeaders() },
+    }),
+  update: (id, data) =>
+    axios.put(`${DARIY_PHP_API}/sales.php?id=${id}`, data, {
+      headers: { 'Content-Type': 'application/json', ...phpAuthHeaders() },
+    }),
+  delete: (id) =>
+    axios.delete(`${DARIY_PHP_API}/sales.php`, {
+      params: { id },
+      headers: phpAuthHeaders(),
+    }),
 };
 
 export const buyersAPI = {

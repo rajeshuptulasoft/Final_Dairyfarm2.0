@@ -59,7 +59,8 @@ function dashboardSummary() {
     $feedStock = fetchOne(
 
         "SELECT IFNULL(SUM(quantity),0) as total
-         FROM stock_entries"
+         FROM stock_entries
+         WHERE quantity > 0"
 
     )['total'] ?? 0;
 

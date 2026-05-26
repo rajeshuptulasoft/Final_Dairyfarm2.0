@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { animalsAPI, milkAPI, heatAPI, catalogueAPI } from '../services/api';
+import { useLocation } from 'react-router-dom';
+import { animalsAPI, milkAPI, heatAPI, catalogueAPI, dailyFoodAPI } from '../services/api';
 import { motion } from 'framer-motion';
 import { Plus, Search, Edit2, Trash2, X, ChevronLeft, ChevronRight, Beef, Milk, Activity, Sparkles, CalendarDays } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -13,6 +13,8 @@ import { getInitialHeatForm, buildHeatPayload } from '../utils/heatForm';
 import HeatFormFields from '../components/animals/HeatFormFields';
 import { getInitialCatalogueForm, buildCataloguePayload } from '../utils/catalogueForm';
 import CatalogueFormFields from '../components/animals/CatalogueFormFields';
+import DailyFoodModal from '../components/animals/DailyFoodModal';
+import { getInitialDailyFoodForm, buildDailyFoodPayload } from '../utils/dailyFoodForm';
 
 const ACTION_TABS = ['Register', 'Daily Milk', 'Daily Food', 'Heat', 'Catalogue'];
 
@@ -25,7 +27,7 @@ const actionBtnMeta = {
 };
 
 export default function Animals() {
-  const navigate = useNavigate();
+  const location = useLocation();
   const [animals, setAnimals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -43,12 +45,54 @@ export default function Animals() {
   const [milkForm, setMilkForm] = useState(getInitialDailyMilkForm);
   const [heatForm, setHeatForm] = useState(getInitialHeatForm);
   const [catalogueForm, setCatalogueForm] = useState(getInitialCatalogueForm);
+  const [foodForm, setFoodForm] = useState(getInitialDailyFoodForm);
+  const [fodderItems, setFodderItems] = useState([]);
+  const [showFoodModal, setShowFoodModal] = useState(false);
+  const [foodSaving, setFoodSaving] = useState(false);
 
   const closeActionModal = () => {
     setShowForm(false);
     if (activeAction === 'Daily Milk') setMilkForm(getInitialDailyMilkForm());
     if (activeAction === 'Heat') setHeatForm(getInitialHeatForm());
     if (activeAction === 'Catalogue') setCatalogueForm(getInitialCatalogueForm());
+  };
+
+  const closeFoodModal = () => {
+    setShowFoodModal(false);
+    setFoodForm(getInitialDailyFoodForm());
+  };
+
+  const handleFoodSubmit = async (e) => {
+    e.preventDefault();
+    if (!foodForm.animal_id) {
+      toast.error('Please select Animal Tag and Animal Name');
+      return;
+    }
+    if (!foodForm.item_id) {
+      toast.error('Please select a fodder item');
+      return;
+    }
+    if (!foodForm.quantity) {
+      toast.error('Please enter Quantity');
+      return;
+    }
+    setFoodSaving(true);
+    try {
+      const res = await dailyFoodAPI.create(buildDailyFoodPayload(foodForm));
+      toast.success(res.data?.message || 'Daily food record saved');
+      closeFoodModal();
+      load();
+    } catch (err) {
+      const msg =
+        err.response?.data?.error ||
+        (Array.isArray(err.response?.data?.errors)
+          ? err.response.data.errors.join(', ')
+          : err.response?.data?.errors) ||
+        'Error saving record';
+      toast.error(msg);
+    } finally {
+      setFoodSaving(false);
+    }
   };
 
   const handleHeatSubmit = async (e) => {
@@ -114,7 +158,30 @@ export default function Animals() {
     setLoading(false);
   };
 
+  const loadFodderItems = async () => {
+    try {
+      const res = await dailyFoodAPI.listItems();
+      setFodderItems(res.data?.items || []);
+    } catch {
+      setFodderItems([]);
+      toast.error('Could not load fodder items');
+    }
+  };
+
+  const openDailyFoodModal = () => {
+    setFoodForm(getInitialDailyFoodForm());
+    loadFodderItems();
+    setShowFoodModal(true);
+  };
+
   useEffect(() => { load(); }, [search, breedFilter, page]);
+
+  useEffect(() => {
+    if (location.state?.openDailyFood) {
+      openDailyFoodModal();
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
 
   const clearImage = () => {
     if (imagePreview) URL.revokeObjectURL(imagePreview);
@@ -192,7 +259,7 @@ export default function Animals() {
 
   const handleActionClick = (action) => {
     if (action === 'Daily Food') {
-      navigate('/muktifarm/admin/animals/daily-food');
+      openDailyFoodModal();
       return;
     }
     if (action === 'Register') {
@@ -328,6 +395,18 @@ export default function Animals() {
           Register
         </button>
       </motion.div>
+
+      {showFoodModal && (
+        <DailyFoodModal
+          form={foodForm}
+          setForm={setFoodForm}
+          animals={animals}
+          fodderItems={fodderItems}
+          onSubmit={handleFoodSubmit}
+          onClose={closeFoodModal}
+          saving={foodSaving}
+        />
+      )}
 
       {showRegisterModal && (
         <AnimalRegisterModal

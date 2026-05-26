@@ -3847,7 +3847,37 @@ tbody tr td:last-child{
   display: none;
 }
 
+/* Sales form — quantity + unit (avoid flex collapse with width:100% inputs) */
+.sale-qty-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 6.5rem;
+  gap: 10px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.sale-qty-row .sale-qty-input {
+  width: 100%;
+  min-width: 0;
+}
+
+.sale-qty-row .sale-qty-unit {
+  width: 100%;
+  min-width: 6.5rem;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 /* Daily Food — match reference form layout */
+.daily-food-modal-panel {
+  position: relative;
+  z-index: 1;
+}
+
+.daily-food-modal-panel .daily-food-top-bar {
+  margin-bottom: 1rem;
+}
+
 .daily-food-page {
   display: flex;
   flex-direction: column;
