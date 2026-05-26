@@ -18,6 +18,7 @@ import {
   buildLivestockPayload,
   livestockFromRecord,
 } from '../utils/livestockForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const settingSections = [
   { key: 'items', label: 'Items', icon: Box, gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)' },
@@ -514,7 +515,7 @@ export default function Items() {
             <p className="text-sm mt-1" style={{color:'var(--text-muted)'}}>{secDesc}</p>
           </div>
         </div>
-        <div className="relative">
+        <div className="relative w-full max-w-md">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2" style={{color:'var(--text-soft)'}} />
           <input className="input-field pl-9" placeholder="Search..." value={search} onChange={e=>setSearch(e.target.value)} />
           {search && <button onClick={()=>setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2" style={{color:'var(--text-soft)'}}><X size={14} /></button>}
@@ -548,9 +549,8 @@ export default function Items() {
       </div>
 
       {/* Premium Table */}
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{minWidth:'800px'}}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr className="text-xs font-semibold uppercase tracking-wider" style={{background:'var(--surface-2)',color:'var(--text-muted)'}}>
                 {formKeys.map(k => <th key={k} className="text-left px-3 py-3 whitespace-nowrap">{k.replace(/_/g,' ')}</th>)}
@@ -614,8 +614,7 @@ export default function Items() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {/* Section Modal */}
       {showForm && (

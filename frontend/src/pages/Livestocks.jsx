@@ -10,6 +10,7 @@ import {
   buildLivestockPayload,
   livestockFromRecord,
 } from '../utils/livestockForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 export default function Livestocks() {
   const [records, setRecords] = useState([]);
@@ -189,7 +190,7 @@ export default function Livestocks() {
         </div>
       </div>
 
-      <motion.button
+      {/* <motion.button
         whileHover={{ y: -2, boxShadow: '0 8px 25px rgba(0,0,0,0.15)' }}
         whileTap={{ scale: 0.96 }}
         onClick={() => {
@@ -227,11 +228,10 @@ export default function Livestocks() {
           <div style={{ fontSize: 14, fontWeight: 600 }}>Add Livestock</div>
           <div style={{ fontSize: 11, opacity: 0.75, marginTop: 1 }}>Register a new livestock category</div>
         </div>
-      </motion.button>
+      </motion.button> */}
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '1200px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr
                 className="text-xs font-semibold uppercase tracking-wider"
@@ -361,8 +361,7 @@ export default function Livestocks() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showForm && renderModal('New Livestock Entry', form, setForm, handleSubmit, closeAdd, 'Register')}
       {showEdit &&

@@ -9,6 +9,7 @@ import {
   buildDailyMilkPayload,
   dailyMilkFromRecord,
 } from '../utils/dailyMilkForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 export default function DailyMilk() {
   const [records, setRecords] = useState([]);
@@ -189,7 +190,7 @@ export default function DailyMilk() {
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <div className="relative min-w-[200px]">
+          <div className="relative w-full max-w-md min-w-[200px]">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-soft)' }} />
             <input
               className="input-field pl-9"
@@ -208,7 +209,7 @@ export default function DailyMilk() {
               </button>
             )}
           </div>
-          <button
+          {/* <button
             type="button"
             className="btn-primary flex items-center gap-2"
             onClick={() => {
@@ -218,13 +219,12 @@ export default function DailyMilk() {
           >
             <Plus size={16} />
             Add Record
-          </button>
+          </button> */}
         </div>
       </div>
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '1200px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr
                 className="text-xs font-semibold uppercase tracking-wider"
@@ -250,11 +250,11 @@ export default function DailyMilk() {
                       <p className="font-semibold" style={{ color: 'var(--text)' }}>
                         {search ? 'No matches found' : 'No milk records yet'}
                       </p>
-                      {!search && (
+                      {/* {!search && (
                         <button type="button" className="btn-primary mt-2" onClick={() => setShowAdd(true)}>
                           <Plus size={14} /> Add Record
                         </button>
-                      )}
+                      )} */}
                     </div>
                   </td>
                 </tr>
@@ -316,8 +316,7 @@ export default function DailyMilk() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showAdd && renderModal('Add Daily Milk', form, setForm, handleAdd, closeAdd, 'Save')}
       {showEdit && renderModal('Edit Milk Record', editForm, setEditForm, handleUpdate, closeEdit, 'Update')}

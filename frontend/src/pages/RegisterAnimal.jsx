@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import AnimalRegisterModal from '../components/animals/AnimalRegisterModal';
 import { BREED_OPTIONS } from '../components/animals/AnimalRegisterFormFields';
 import { initialAnimalForm, animalFromRecord, submitAnimal } from '../utils/animalForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 export default function RegisterAnimal() {
   const navigate = useNavigate();
@@ -148,7 +149,7 @@ export default function RegisterAnimal() {
             <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Add new animals or manage existing</p>
           </div>
         </div>
-        <button
+        {/* <button
           type="button"
           className="btn-primary flex items-center gap-2"
           onClick={() => {
@@ -159,7 +160,7 @@ export default function RegisterAnimal() {
         >
           <Plus size={16} />
           Register
-        </button>
+        </button> */}
       </div>
 
       <div className="flex flex-wrap gap-3">
@@ -178,7 +179,7 @@ export default function RegisterAnimal() {
             <option key={b} value={b}>{b}</option>
           ))}
         </select>
-        <button
+        {/* <button
           type="button"
           className="btn-primary flex items-center gap-2 shrink-0"
           onClick={() => {
@@ -189,12 +190,11 @@ export default function RegisterAnimal() {
         >
           <Plus size={16} />
           Register
-        </button>
+        </button> */}
       </div>
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '1400px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr className="text-xs font-semibold uppercase tracking-wider" style={{ background: 'var(--surface-2)', color: 'var(--text-muted)' }}>
                 {fields.map(f => (
@@ -211,9 +211,9 @@ export default function RegisterAnimal() {
                       <Beef size={28} />
                     </div>
                     <p className="font-semibold text-base" style={{ color: 'var(--text)' }}>{search || breedFilter ? 'No matches found' : 'No animals yet'}</p>
-                    <button type="button" className="btn-primary mt-2" onClick={() => { setForm(initialAnimalForm); clearRegisterImage(); setShowRegisterModal(true); }}>
+                    {/* <button type="button" className="btn-primary mt-2" onClick={() => { setForm(initialAnimalForm); clearRegisterImage(); setShowRegisterModal(true); }}>
                       <Plus size={14} /> Register Animal
-                    </button>
+                    </button> */}
                   </div>
                 </td></tr>
               ) : (
@@ -296,8 +296,7 @@ export default function RegisterAnimal() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showRegisterModal && (
         <AnimalRegisterModal

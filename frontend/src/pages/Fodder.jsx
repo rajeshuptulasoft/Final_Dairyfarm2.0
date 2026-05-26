@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Save, X, Search, Edit2, Trash2, Layers } from 'lucide-react';
 import toast from 'react-hot-toast';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const initForm = {
   base_fodder_item: 'chokada', exchange_fodder_item: 'chokada',
@@ -44,15 +45,14 @@ export default function Fodder() {
           <div className="w-10 h-10 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(139,92,246,.12)', color: '#8b5cf6' }}><Layers size={22} /></div>
           <div><h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Fodder</h1><p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Manage fodder exchange rates</p></div>
         </div>
-        <div className="relative">
+        <div className="relative w-full max-w-md">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-soft)' }} />
           <input className="input-field pl-9" placeholder="Search..." value={search} onChange={e => setSearch(e.target.value)} />
           {search && <button type="button" onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-soft)' }}><X size={14} /></button>}
         </div>
       </div>
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '800px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr className="text-xs font-semibold uppercase tracking-wider" style={{ background: 'var(--surface-2)', color: 'var(--text-muted)' }}>
                 <th className="text-left px-3 py-3">Base Item</th>
@@ -82,8 +82,7 @@ export default function Fodder() {
               ))}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
       {showForm && (
         <><div className="modal-overlay" onClick={() => setShowForm(false)} /><div className="modal-container"><div className="modal-content"><div className="modal-header"><h2 className="modal-title">New Fodder Exchange</h2><button onClick={() => setShowForm(false)} className="modal-close-btn"><X size={28} /></button></div>
         <form onSubmit={handleSubmit}><div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

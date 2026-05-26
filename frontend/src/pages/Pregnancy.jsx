@@ -5,6 +5,7 @@ import { Plus, Save, X, Search, Edit2, Trash2, Calendar, Beef } from 'lucide-rea
 import toast from 'react-hot-toast';
 import PregnancyFormFields from '../components/pregnancy/PregnancyFormFields';
 import { getInitialPregnancyForm, buildPregnancyPayload, pregnancyFromRecord } from '../utils/pregnancyForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const FIELDS = [
   { key: 'tag_number', label: 'Tag' },
@@ -189,7 +190,7 @@ export default function Pregnancy() {
         </div>
       </div>
 
-      <motion.button
+      {/* <motion.button
         whileHover={{ y: -2, boxShadow: '0 8px 25px rgba(0,0,0,0.15)' }}
         whileTap={{ scale: 0.96 }}
         onClick={() => {
@@ -227,11 +228,10 @@ export default function Pregnancy() {
           <div style={{ fontSize: 14, fontWeight: 600 }}>New Pregnancy</div>
           <div style={{ fontSize: 11, opacity: 0.75, marginTop: 1 }}>Record pregnancy check</div>
         </div>
-      </motion.button>
+      </motion.button> */}
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '800px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr
                 className="text-xs font-semibold uppercase tracking-wider"
@@ -334,8 +334,7 @@ export default function Pregnancy() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showForm && renderModal('New Pregnancy Record', form, setForm, handleSubmit, closeAdd, 'Register')}
       {showEdit && renderModal('Edit Pregnancy Record', editForm, setEditForm, handleUpdate, closeEdit, 'Save Changes')}

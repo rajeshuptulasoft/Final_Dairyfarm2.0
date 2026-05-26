@@ -6,6 +6,7 @@ import ModalPortal from '../components/ui/ModalPortal';
 import { buyersAPI } from '../services/api';
 import BuyerFormFields from '../components/buyers/BuyerFormFields';
 import { getInitialBuyerForm, buildBuyerPayload, buyerFromRecord } from '../utils/buyerForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 export default function Buyers() {
   const [records, setRecords] = useState([]);
@@ -195,7 +196,7 @@ export default function Buyers() {
         </div>
       </div>
 
-      <motion.button
+      {/* <motion.button
         whileHover={{ y: -2, boxShadow: '0 8px 25px rgba(0,0,0,0.15)' }}
         whileTap={{ scale: 0.96 }}
         onClick={() => {
@@ -233,11 +234,10 @@ export default function Buyers() {
           <div style={{ fontSize: 14, fontWeight: 600 }}>Add Buyer</div>
           <div style={{ fontSize: 11, opacity: 0.75, marginTop: 1 }}>Register a new buyer</div>
         </div>
-      </motion.button>
+      </motion.button> */}
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '1000px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr
                 className="text-xs font-semibold uppercase tracking-wider"
@@ -346,8 +346,7 @@ export default function Buyers() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showForm && renderModal('New Buyer', form, setForm, handleSubmit, closeAdd, 'Register')}
       {showEdit && renderModal('Edit Buyer', editForm, setEditForm, handleUpdate, closeEdit, 'Save Changes')}

@@ -11,6 +11,7 @@ import { getInitialPregnancyForm, buildPregnancyPayload } from '../utils/pregnan
 import PregnancyFormFields from '../components/pregnancy/PregnancyFormFields';
 import CalvedFormFields from '../components/calved/CalvedFormFields';
 import { getInitialCalvedForm, buildCalvedPayload } from '../utils/calvedForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const today = () => new Date().toISOString().split('T')[0];
 
@@ -215,7 +216,7 @@ export default function Health() {
             <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Track animal health & treatments</p>
           </div>
         </div>
-        <div className="relative">
+        <div className="relative w-full max-w-md">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-soft)' }} />
           <input className="input-field pl-9" placeholder="Search..." value={search} onChange={e => setSearch(e.target.value)} />
           {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-soft)' }}><X size={14} /></button>}
@@ -247,9 +248,8 @@ export default function Health() {
       </div>
 
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '1200px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr className="text-xs font-semibold uppercase tracking-wider" style={{ background: 'var(--surface-2)', color: 'var(--text-muted)' }}>
                 {FIELDS.map(f => (
@@ -315,8 +315,7 @@ export default function Health() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {/* Health Log Modal */}
       {showForm && (

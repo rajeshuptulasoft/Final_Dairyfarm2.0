@@ -6,6 +6,7 @@ import {
 import toast from 'react-hot-toast';
 import { enquiriesAPI } from '../services/api';
 import ModalPortal from '../components/ui/ModalPortal';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 export default function ProductEnquiries() {
   const [enquiries, setEnquiries] = useState([]);
@@ -125,26 +126,28 @@ export default function ProductEnquiries() {
         </div>
       </div>
 
-      <div className="card overflow-hidden">
-        <div className="p-4 border-b" style={{ borderColor: 'var(--border)' }}>
-          <div className="relative max-w-xl">
-            <Search
-              size={18}
-              className="absolute left-3 top-1/2 -translate-y-1/2"
-              style={{ color: 'var(--text-soft)' }}
-            />
-            <input
-              type="text"
-              placeholder="Search product, customer, phone, message..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="input-field w-full pl-10 text-sm"
-            />
+      <AdminTablePanel
+        noPadding
+        toolbar={
+          <div className="p-4 border-b" style={{ borderColor: 'var(--border)' }}>
+            <div className="relative max-w-xl w-full">
+              <Search
+                size={18}
+                className="absolute left-3 top-1/2 -translate-y-1/2"
+                style={{ color: 'var(--text-soft)' }}
+              />
+              <input
+                type="text"
+                placeholder="Search product, customer, phone, message..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="input-field w-full pl-10 text-sm"
+              />
+            </div>
           </div>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full">
+        }
+      >
+          <table className="w-full admin-data-table">
             <thead style={{ background: 'rgba(34,197,94,.06)' }}>
               <tr>
                 <th className="px-4 py-3 text-left text-xs font-bold uppercase" style={{ color: 'var(--text-muted)' }}>Product</th>
@@ -232,8 +235,7 @@ export default function ProductEnquiries() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showModal && selectedEnquiry && (
         <ModalPortal>

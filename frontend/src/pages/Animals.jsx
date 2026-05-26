@@ -15,6 +15,7 @@ import { getInitialCatalogueForm, buildCataloguePayload } from '../utils/catalog
 import CatalogueFormFields from '../components/animals/CatalogueFormFields';
 import DailyFoodModal from '../components/animals/DailyFoodModal';
 import { getInitialDailyFoodForm, buildDailyFoodPayload } from '../utils/dailyFoodForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const ACTION_TABS = ['Register', 'Daily Milk', 'Daily Food', 'Heat', 'Catalogue'];
 
@@ -285,7 +286,7 @@ export default function Animals() {
       </motion.div>
 
       {/* Stats */}
-      <motion.div initial="hidden" animate="show" className="grid grid-cols-4 gap-4 mb-5">
+      <motion.div initial="hidden" animate="show" className="animals-stats-grid mb-5">
         {statCards.map((s, i) => (
           <motion.div key={i} variants={fadeUp} className="animal-stat-card" style={{ borderTop: `3px solid ${s.color}` }}>
             <div className="flex items-center gap-3 mb-2">
@@ -300,8 +301,9 @@ export default function Animals() {
       </motion.div>
 
       {/* Action Buttons */}
-      <motion.div initial="hidden" animate="show" className="flex flex-wrap gap-3 mb-5">
+      <motion.div initial="hidden" animate="show" className="animals-action-bar flex flex-wrap gap-3 mb-5">
         {ACTION_TABS.map((a) => {
+          if (a === 'Register') return null;
           const meta = actionBtnMeta[a];
           const Icon = meta.icon;
           return (
@@ -378,8 +380,8 @@ export default function Animals() {
       )}
 
       {/* Search & Filter */}
-      <motion.div initial="hidden" animate="show" className="flex flex-wrap gap-3 mb-4 items-center">
-        <div className="relative flex-1 min-w-[200px]">
+      <motion.div initial="hidden" animate="show" className="animals-filter-bar flex flex-wrap gap-3 mb-4 items-center">
+        <div className="relative flex-1 min-w-0 w-full sm:min-w-[200px]">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-soft)' }} />
           <input className="input-field pl-9" placeholder="Search by name or tag..." value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} />
           {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-soft)' }}><X size={14} /></button>}
@@ -424,9 +426,9 @@ export default function Animals() {
       )}
 
       {/* Premium Table */}
-      <motion.div initial="hidden" animate="show" className="card overflow-hidden p-0">
-        <div className="overflow-x-auto">
-          <table className="w-full">
+      <motion.div initial="hidden" animate="show">
+        <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr className="text-xs font-semibold uppercase tracking-wider" style={{ background: 'var(--surface-2)', color: 'var(--text-muted)' }}>
                 <th className="text-left px-4 py-3">Tag</th>
@@ -454,9 +456,9 @@ export default function Animals() {
                     </div>
                     <p className="font-semibold text-base" style={{ color: 'var(--text)' }}>No animals found</p>
                     <p className="text-sm">Add your first animal to start tracking</p>
-                    <button type="button" className="btn-primary mt-2" onClick={() => openRegisterModal()}>
+                    {/* <button type="button" className="btn-primary mt-2" onClick={() => openRegisterModal()}>
                       <Plus size={14} /> Add Animal
-                    </button>
+                    </button> */}
                   </div>
                 </td></tr>
               ) : (
@@ -516,7 +518,7 @@ export default function Animals() {
               )}
             </tbody>
           </table>
-        </div>
+        </AdminTablePanel>
         {pages > 1 && (
           <div className="flex items-center justify-between px-4 py-3 border-t" style={{ borderColor: 'var(--border)' }}>
             <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Page {page} of {pages} · {total} total</span>

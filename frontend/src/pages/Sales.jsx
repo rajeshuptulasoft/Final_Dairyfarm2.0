@@ -6,6 +6,7 @@ import ModalPortal from '../components/ui/ModalPortal';
 import { salesAPI } from '../services/api';
 import SalesFormFields from '../components/sales/SalesFormFields';
 import { getInitialSaleForm, buildSalePayload, saleFromRecord } from '../utils/saleForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const TABLE_FIELDS = [
   { key: 'sale_date', label: 'Date' },
@@ -254,9 +255,8 @@ export default function Sales() {
         </div>
       </motion.button>
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '1200px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr
                 className="text-xs font-semibold uppercase tracking-wider"
@@ -374,8 +374,7 @@ export default function Sales() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showForm && renderModal('Register Sale', form, setForm, handleSubmit, closeAdd, 'Register')}
       {showEdit && renderModal('Edit Sale', editForm, setEditForm, handleUpdate, closeEdit, 'Save Changes')}

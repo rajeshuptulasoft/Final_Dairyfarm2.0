@@ -6,6 +6,7 @@ import ModalPortal from '../components/ui/ModalPortal';
 import { vendorsAPI } from '../services/api';
 import VendorFormFields from '../components/vendors/VendorFormFields';
 import { getInitialVendorForm, buildVendorPayload, vendorFromRecord } from '../utils/vendorForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 export default function Vendors() {
   const [records, setRecords] = useState([]);
@@ -193,7 +194,7 @@ export default function Vendors() {
         </div>
       </div>
 
-      <motion.button
+      {/* <motion.button
         whileHover={{ y: -2, boxShadow: '0 8px 25px rgba(0,0,0,0.15)' }}
         whileTap={{ scale: 0.96 }}
         onClick={() => {
@@ -231,11 +232,10 @@ export default function Vendors() {
           <div style={{ fontSize: 14, fontWeight: 600 }}>Add Vendor</div>
           <div style={{ fontSize: 11, opacity: 0.75, marginTop: 1 }}>Register a new vendor</div>
         </div>
-      </motion.button>
+      </motion.button> */}
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '1000px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr
                 className="text-xs font-semibold uppercase tracking-wider"
@@ -330,8 +330,7 @@ export default function Vendors() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showForm && renderModal('New Vendor', form, setForm, handleSubmit, closeAdd, 'Register')}
       {showEdit && renderModal('Edit Vendor', editForm, setEditForm, handleUpdate, closeEdit, 'Save Changes')}

@@ -5,6 +5,7 @@ import { Plus, Save, X, Search, Edit2, Trash2, Package, ShoppingCart, CreditCard
 import toast from 'react-hot-toast';
 import PurchaseFormFields from '../components/purchase/PurchaseFormFields';
 import { getInitialPurchaseForm, buildPurchasePayload, purchaseFromRecord } from '../utils/purchaseForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const FIELDS = [
   { key: 'purchase_date', label: 'Date' },
@@ -299,9 +300,8 @@ export default function Vaccinations() {
         </div>
       </motion.button>
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '1200px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr
                 className="text-xs font-semibold uppercase tracking-wider"
@@ -376,8 +376,7 @@ export default function Vaccinations() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showForm && renderModal('New Purchase Record', form, setForm, handleSubmit, closeAdd, 'Register')}
       {showEdit && renderModal('Edit Purchase Record', editForm, setEditForm, handleUpdate, closeEdit, 'Save Changes')}

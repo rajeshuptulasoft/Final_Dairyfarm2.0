@@ -5,6 +5,7 @@ import { Plus, Save, X, Search, Edit2, Trash2, Book, Beef } from 'lucide-react';
 import toast from 'react-hot-toast';
 import CalvedFormFields from '../components/calved/CalvedFormFields';
 import { getInitialCalvedForm, buildCalvedPayload, calvedFromRecord } from '../utils/calvedForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const TABLE_COLUMNS = [
   { key: 'calving_date', label: 'Calving Date' },
@@ -196,7 +197,7 @@ export default function Calved() {
         </div>
       </div>
 
-      <motion.button
+      {/* <motion.button
         whileHover={{ y: -2, boxShadow: '0 8px 25px rgba(0,0,0,0.15)' }}
         whileTap={{ scale: 0.96 }}
         onClick={() => {
@@ -234,11 +235,10 @@ export default function Calved() {
           <div style={{ fontSize: 14, fontWeight: 600 }}>New Calving Record</div>
           <div style={{ fontSize: 11, opacity: 0.75, marginTop: 1 }}>Register full calving details</div>
         </div>
-      </motion.button>
+      </motion.button> */}
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '800px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr
                 className="text-xs font-semibold uppercase tracking-wider"
@@ -333,8 +333,7 @@ export default function Calved() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showForm && renderModal('New Calving Record', form, setForm, handleSubmit, closeAdd, 'Register')}
       {showEdit && renderModal('Edit Calving Record', editForm, setEditForm, handleUpdate, closeEdit, 'Save Changes')}

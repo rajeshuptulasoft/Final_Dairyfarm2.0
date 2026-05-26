@@ -6,6 +6,7 @@ import ModalPortal from '../components/ui/ModalPortal';
 import { doctorsAPI } from '../services/api';
 import DoctorFormFields from '../components/doctors/DoctorFormFields';
 import { getInitialDoctorForm, buildDoctorPayload, doctorFromRecord } from '../utils/doctorForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 export default function Doctors() {
   const [records, setRecords] = useState([]);
@@ -193,7 +194,7 @@ export default function Doctors() {
         </div>
       </div>
 
-      <motion.button
+      {/* <motion.button
         whileHover={{ y: -2, boxShadow: '0 8px 25px rgba(0,0,0,0.15)' }}
         whileTap={{ scale: 0.96 }}
         onClick={() => {
@@ -231,11 +232,10 @@ export default function Doctors() {
           <div style={{ fontSize: 14, fontWeight: 600 }}>Add Doctor</div>
           <div style={{ fontSize: 11, opacity: 0.75, marginTop: 1 }}>Register a new doctor</div>
         </div>
-      </motion.button>
+      </motion.button> */}
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '1000px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr
                 className="text-xs font-semibold uppercase tracking-wider"
@@ -344,8 +344,7 @@ export default function Doctors() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showForm && renderModal('New Doctor', form, setForm, handleSubmit, closeAdd, 'Register')}
       {showEdit && renderModal('Edit Doctor', editForm, setEditForm, handleUpdate, closeEdit, 'Save Changes')}

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { dailyFoodAPI } from '../services/api';
-import { Search, Trash2, Beef, Plus } from 'lucide-react';
+import { Search, Trash2, Beef } from 'lucide-react';
 import toast from 'react-hot-toast';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const TABLE_FIELDS = [
   { key: 'food_date', label: 'Food Date' },
@@ -17,7 +17,6 @@ const TABLE_FIELDS = [
 ];
 
 export default function DailyFood() {
-  const navigate = useNavigate();
   const [records, setRecords] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
@@ -70,40 +69,43 @@ export default function DailyFood() {
             Log new entries from All Animals → Daily Food
           </p>
         </div>
-        <button
+        {/* <button
           type="button"
           className="btn-primary flex items-center gap-2"
           onClick={() => navigate('/muktifarm/admin/animals', { state: { openDailyFood: true } })}
         >
           <Plus size={16} />
           Daily Food Log
-        </button>
+        </button> */}
       </div>
 
-      <div className="card overflow-hidden">
-        <div
-          className="p-4 border-b flex flex-wrap items-center justify-between gap-3"
-          style={{ borderColor: 'var(--border)' }}
-        >
-          <h2 className="text-lg font-semibold" style={{ color: 'var(--text)' }}>
-            Recent Records
-          </h2>
-          <div className="relative w-full max-w-xs">
-            <Search
-              size={16}
-              className="absolute left-3 top-1/2 -translate-y-1/2"
-              style={{ color: 'var(--text-soft)' }}
-            />
-            <input
-              className="input-field pl-9 text-sm w-full"
-              placeholder="Search records..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+      <AdminTablePanel
+        noPadding
+        toolbar={
+          <div
+            className="p-4 border-b flex flex-wrap items-center justify-between gap-3"
+            style={{ borderColor: 'var(--border)' }}
+          >
+            <h2 className="text-lg font-semibold" style={{ color: 'var(--text)' }}>
+              Recent Records
+            </h2>
+            <div className="relative w-full max-w-xs">
+              <Search
+                size={16}
+                className="absolute left-3 top-1/2 -translate-y-1/2"
+                style={{ color: 'var(--text-soft)' }}
+              />
+              <input
+                className="input-field pl-9 text-sm w-full"
+                placeholder="Search records..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
           </div>
-        </div>
-        <div className="overflow-x-auto admin-table-scroll">
-          <table className="w-full">
+        }
+      >
+          <table className="w-full admin-data-table">
             <thead>
               <tr style={{ background: 'var(--surface-2)', color: 'var(--text-muted)' }}>
                 {TABLE_FIELDS.map((f) => (
@@ -168,8 +170,7 @@ export default function DailyFood() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
     </motion.div>
   );
 }

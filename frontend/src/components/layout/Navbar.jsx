@@ -67,25 +67,24 @@ export default function Navbar({ setMobileOpen }) {
   return (
     <header className="admin-header sticky top-0 z-30 border-b border-gray-200 dark:border-gray-700">
       <div className="admin-header-inner">
-        <div className="admin-header-left">
-          <button
-            type="button"
-            onClick={() => setMobileOpen(true)}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200"
-            aria-label="Open menu"
-          >
-            <Menu size={20} />
-          </button>
-          <div className="admin-header-titles min-w-0">
-            <h1 className="admin-header-title">{pageMeta.title}</h1>
-            <p className="admin-header-subtitle">{pageMeta.subtitle}</p>
-          </div>
+        <button
+          type="button"
+          onClick={() => setMobileOpen(true)}
+          className="admin-header-menu-btn lg:hidden"
+          aria-label="Open menu"
+        >
+          <Menu size={20} />
+        </button>
+
+        <div className="admin-header-titles">
+          <h1 className="admin-header-title">{pageMeta.title}</h1>
+          <p className="admin-header-subtitle">{pageMeta.subtitle}</p>
         </div>
 
-        <div className="admin-header-right">
-          <div className="admin-header-user flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-800">
-            <User size={16} className="text-primary-600" />
-            <span className="text-sm font-medium text-gray-800 dark:text-gray-100">
+        <div className="admin-header-actions">
+          <div className="admin-header-user hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-800">
+            <User size={16} className="text-primary-600 shrink-0" />
+            <span className="text-sm font-medium text-gray-800 dark:text-gray-100 truncate max-w-[140px]">
               {user?.name || 'Admin User'}
             </span>
           </div>
@@ -93,7 +92,7 @@ export default function Navbar({ setMobileOpen }) {
           <button
             type="button"
             onClick={toggle}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
+            className="admin-header-icon-btn"
             aria-label="Toggle theme"
           >
             {dark ? <Sun size={20} /> : <Moon size={20} />}
@@ -103,7 +102,7 @@ export default function Navbar({ setMobileOpen }) {
             <button
               type="button"
               onClick={() => setShowNotif(!showNotif)}
-              className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
+              className="admin-header-icon-btn relative"
               aria-label="Notifications"
             >
               <Bell size={20} />
@@ -139,12 +138,13 @@ export default function Navbar({ setMobileOpen }) {
             <button
               type="button"
               onClick={() => setShowUser(!showUser)}
-              className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="admin-header-profile-btn"
+              aria-label="Account menu"
             >
-              <div className="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center">
+              <div className="admin-header-avatar">
                 <User size={16} className="text-primary-600" />
               </div>
-              <span className="text-sm font-medium text-gray-800 dark:text-gray-100 hidden sm:block">
+              <span className="admin-header-profile-name hidden xl:inline">
                 {user?.name || 'User'}
               </span>
             </button>

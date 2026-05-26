@@ -3,6 +3,7 @@ import { expensesAPI } from '../services/api';
 import { motion } from 'framer-motion';
 import { Plus, DollarSign, X } from 'lucide-react';
 import toast from 'react-hot-toast';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const categories = ['Feed', 'Vaccination', 'Veterinary', 'Labour', 'Equipment', 'Utilities', 'Transport', 'Other'];
 
@@ -64,8 +65,8 @@ export default function Expenses() {
         </select>
       </div>
 
-      <div className="card overflow-hidden p-0">
-        <table className="w-full">
+      <AdminTablePanel noPadding>
+        <table className="w-full admin-data-table">
           <thead>
             <tr className="border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
               <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Date</th>
@@ -89,7 +90,7 @@ export default function Expenses() {
             ))}
           </tbody>
         </table>
-      </div>
+      </AdminTablePanel>
 
       {showForm && (
         <>

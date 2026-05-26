@@ -6,6 +6,7 @@ import { Plus, Save, X, Search, Edit2, Trash2, Milk as MilkIcon, FileText, Book,
 import toast from 'react-hot-toast';
 import StockFormFields from '../components/stock/StockFormFields';
 import { getInitialStockForm, buildStockPayload, stockFromRecord } from '../utils/stockForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const TAB_ACTIONS = [
   { key: 'Entry', label: 'Entry', icon: Plus, path: '/muktifarm/admin/milk/entry' },
@@ -363,9 +364,8 @@ export default function Milk() {
         })}
       </div>
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: isViewMode || isDonationMode ? '1000px' : '1400px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr
                 className="text-xs font-semibold uppercase tracking-wider"
@@ -449,8 +449,7 @@ export default function Milk() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showForm && renderModal('New Stock Entry', form, setForm, handleSubmit, closeAdd, 'Save Entry')}
       {showEdit && renderModal('Edit Stock Record', editForm, setEditForm, handleUpdate, closeEdit, 'Save Changes')}

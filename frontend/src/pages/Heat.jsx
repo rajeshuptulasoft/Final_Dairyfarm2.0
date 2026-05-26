@@ -5,6 +5,7 @@ import { Thermometer, Plus, Save, X, Search, Edit2, Trash2, Beef } from 'lucide-
 import toast from 'react-hot-toast';
 import HeatFormFields from '../components/animals/HeatFormFields';
 import { getInitialHeatForm, buildHeatPayload, heatFromRecord } from '../utils/heatForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const TABLE_COLUMNS = [
   { key: 'tag', label: 'Animal Tag' },
@@ -184,16 +185,15 @@ export default function Heat() {
               </button>
             )}
           </div>
-          <button type="button" className="btn-primary flex items-center gap-2" onClick={() => setShowAdd(true)}>
+          {/* <button type="button" className="btn-primary flex items-center gap-2" onClick={() => setShowAdd(true)}>
             <Plus size={18} />
             Add Record
-          </button>
+          </button> */}
         </div>
       </div>
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '900px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr
                 className="text-xs font-semibold uppercase tracking-wider"
@@ -283,8 +283,7 @@ export default function Heat() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showAdd && renderModal('Add Heat Record', form, setForm, handleAdd, closeAdd, 'Save Record')}
       {showEdit && renderModal('Edit Heat Record', editForm, setEditForm, handleUpdate, closeEdit, 'Save Changes')}

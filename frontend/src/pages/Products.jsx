@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Save, X, Search, Edit2, Trash2, Package2, Box, Activity, Layers, Users, Truck, HeartPulse, Tag } from 'lucide-react';
 import toast from 'react-hot-toast';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const settingSections = [
   { key: 'items', path: '/muktifarm/admin/settings/items', label: 'Items', icon: Box, gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)' },
@@ -60,9 +61,8 @@ export default function Products() {
           {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-soft)' }}><X size={14} /></button>}
         </div>
       </div>
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '1000px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr className="text-xs font-semibold uppercase tracking-wider" style={{ background: 'var(--surface-2)', color: 'var(--text-muted)' }}>
                 <th className="text-left px-3 py-3">Product</th>
@@ -96,8 +96,7 @@ export default function Products() {
               ))}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
       {/* New Modal */}
       {showForm && (
         <><div className="modal-overlay" onClick={() => setShowForm(false)} /><div className="modal-container"><div className="modal-content"><div className="modal-header"><h2 className="modal-title">New Product</h2><button onClick={() => setShowForm(false)} className="modal-close-btn"><X size={28} /></button></div>

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.93fe130e.css",
-    "main.js": "/static/js/main.bda05d7c.js",
+    "main.css": "/static/css/main.5f732fb5.css",
+    "main.js": "/static/js/main.e33e2935.js",
     "static/media/Sweet Curd.png": "/static/media/Sweet Curd.822a81f6c2c1711cfb1b.png",
     "static/media/Our Story.png": "/static/media/Our Story.add70bf81487dcb19d29.png",
     "static/media/Returned, Sanitized, Reused.png": "/static/media/Returned, Sanitized, Reused.b83dce880efddb9251ee.png",
@@ -39,11 +39,11 @@
     "static/media/img-9.jpg": "/static/media/img-9.5f5f730453ec22aa6369.jpg",
     "static/media/img-12.png": "/static/media/img-12.d0e83dfc424c6578104b.png",
     "index.html": "/index.html",
-    "main.93fe130e.css.map": "/static/css/main.93fe130e.css.map",
-    "main.bda05d7c.js.map": "/static/js/main.bda05d7c.js.map"
+    "main.5f732fb5.css.map": "/static/css/main.5f732fb5.css.map",
+    "main.e33e2935.js.map": "/static/js/main.e33e2935.js.map"
   },
   "entrypoints": [
-    "static/css/main.93fe130e.css",
-    "static/js/main.bda05d7c.js"
+    "static/css/main.5f732fb5.css",
+    "static/js/main.e33e2935.js"
   ]
 }

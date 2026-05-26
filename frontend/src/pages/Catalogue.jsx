@@ -9,6 +9,7 @@ import {
   buildCataloguePayload,
   catalogueFromRecord,
 } from '../utils/catalogueForm';
+import AdminTablePanel from '../components/layout/AdminTablePanel';
 
 const TABLE_COLUMNS = [
   { key: 'animal', label: 'Animal' },
@@ -214,16 +215,15 @@ export default function Catalogue() {
               </button>
             )}
           </div>
-          <button type="button" className="btn-primary flex items-center gap-2" onClick={() => setShowAdd(true)}>
+          {/* <button type="button" className="btn-primary flex items-center gap-2" onClick={() => setShowAdd(true)}>
             <Plus size={18} />
             Add Entry
-          </button>
+          </button> */}
         </div>
       </div>
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ minWidth: '1200px' }}>
+      <AdminTablePanel noPadding>
+          <table className="w-full admin-data-table">
             <thead>
               <tr
                 className="text-xs font-semibold uppercase tracking-wider"
@@ -298,8 +298,7 @@ export default function Catalogue() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
+      </AdminTablePanel>
 
       {showAdd && renderModal('Add Catalogue Entry', form, setForm, handleAdd, closeAdd, 'Save Entry')}
       {showEdit && renderModal('Edit Catalogue Entry', editForm, setEditForm, handleUpdate, closeEdit, 'Save Changes')}
